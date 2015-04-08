@@ -258,8 +258,9 @@ public class StartekFP300UNDK extends Activity {
 
 
 
-        //Scroll for textview
+        //Ray-Scroll for textview
         theMessage.setMovementMethod(new ScrollingMovementMethod());
+
       //Connect
       		buttonConnect.setOnClickListener(new Button.OnClickListener(){
       			@Override
@@ -301,13 +302,13 @@ public class StartekFP300UNDK extends Activity {
 				
 			    //Log.v("Fm210", "Marcus: Click");
 				try{
-				
-				if(connectrtn==0){
+				//si el valor es -1 la conexion no se establecion
+				if(connectrtn!=-1){
 					m_eventHandler = new EventHandler(Looper.getMainLooper());
 //					CaptureThread m_captureThread = new CaptureThread(m_eventHandler);
 //					Thread m_capture = new Thread(m_captureThread);
 //					m_capture.start();
-					buttonCapture.setEnabled(false);
+					buttonCapture.setVisibility(View.INVISIBLE);
 					
 					new Thread(){
 						public void run(){
@@ -384,7 +385,7 @@ public class StartekFP300UNDK extends Activity {
 				
 				
 				if(connectrtn==0){
-					buttonEnroll.setEnabled(false);	
+					buttonEnroll.setVisibility(View.INVISIBLE);
 					m_eventHandler = new EventHandler(Looper.getMainLooper());
 					
 					//let thread do main job
@@ -468,7 +469,7 @@ public class StartekFP300UNDK extends Activity {
 				try{
 				if(connectrtn==0){
 					m_eventHandler = new EventHandler(Looper.getMainLooper());
-					buttonVerify.setEnabled(false);
+					buttonVerify.setVisibility(View.INVISIBLE);
 					
 					new Thread(){
 						public void run(){
