@@ -106,13 +106,13 @@ public class StartekFP300UNDK extends Activity {
     	                if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
     	                    if(device != null){
     	                      //call method to set up device communication
-    	                    	theMessage.setText("fp300 found and try connect");
+    	                    	theMessage.setText(theMessage.getText()+"\nfp300 found and try connect");
     	                    	connectreader();
     	                   }
     	                } 
     	                else {
     	              //      Log.d(TAG, "permission denied for device " + device);
-    	                	theMessage.setText("fp300 found");
+    	                	theMessage.setText(theMessage.getText()+"\nfp300 found");
     	                }
     	            }
     	        }
@@ -137,20 +137,20 @@ public class StartekFP300UNDK extends Activity {
 				 ep2IN = null;
 
 		
-				 theMessage.setText("num of ep"+usbIf.getEndpointCount());
+				 theMessage.setText(theMessage.getText()+"\nnum of ep"+usbIf.getEndpointCount());
 				 
 				 epOUT = usbIf.getEndpoint(0);	
 				 epIN = usbIf.getEndpoint(1);
 				 ep2IN = usbIf.getEndpoint(2);
 				 
-			//	 theMessage.setText("ep num "+ ep2IN.getEndpointNumber()+"packet size "+ ep2IN.getMaxPacketSize()+"dir "+ep2IN.getDirection());
-			//	 theMessage.setText("ep num "+ epIN.getEndpointNumber()+"packet size "+ epIN.getMaxPacketSize()+"dir "+epIN.getDirection());
-				 theMessage.setText("ep num "+ epOUT.getEndpointNumber()+"packet size "+ epOUT.getMaxPacketSize()+"dir "+epOUT.getDirection());
+			//	 theMessage.setText(theMessage.getText()+"\nep num "+ ep2IN.getEndpointNumber()+"packet size "+ ep2IN.getMaxPacketSize()+"dir "+ep2IN.getDirection());
+			//	 theMessage.setText(theMessage.getText()+"\nep num "+ epIN.getEndpointNumber()+"packet size "+ epIN.getMaxPacketSize()+"dir "+epIN.getDirection());
+				 theMessage.setText(theMessage.getText()+"\nep num "+ epOUT.getEndpointNumber()+"packet size "+ epOUT.getMaxPacketSize()+"dir "+epOUT.getDirection());
 			   
-			//	 theMessage.setText("manager.hasPermission()");
+			//	 theMessage.setText(theMessage.getText()+"\nmanager.hasPermission()");
 			     if (!manager.hasPermission(d))
 			     {
-			    	 theMessage.setText("manager.hasPermission() false");
+			    	 theMessage.setText(theMessage.getText()+"\nmanager.hasPermission() false");
 			    	 return ; 
 			    	 
 			     }
@@ -188,10 +188,10 @@ public class StartekFP300UNDK extends Activity {
 			     {
 			         Log.d("USB", "Claim fails");
 			     }
-			 //     theMessage.setText("EEPROM_read");
+			 //     theMessage.setText(theMessage.getText()+"\nEEPROM_read");
 			 //     byte [] buf= new byte [48];
 			 //     eeprom_read(0,48,buf);
-			      theMessage.setText("fm220 fileDesc" + conn.getFileDescriptor());
+			      theMessage.setText(theMessage.getText()+"\nfm220 fileDesc" + conn.getFileDescriptor());
 	
 
 			      
@@ -207,7 +207,7 @@ public class StartekFP300UNDK extends Activity {
                        
         theMessage = (TextView)findViewById(R.id.message);      
         
-        theMessage.setText("STARTEK FP300 Android SDK 0.16 holing build 2014105281743");
+        theMessage.setText(theMessage.getText()+"\nSTARTEK FP300 Android SDK 0.16 holing build 2014105281743");
         Context=getApplicationContext();
         buttonConnect = (Button)findViewById(R.id.connectB);
   		buttonCapture = (Button)findViewById(R.id.captureB);
@@ -230,7 +230,7 @@ public class StartekFP300UNDK extends Activity {
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
 		registerReceiver(mUsbReceiver, filter);
 		
-		//theMessage.setText("STARTEK FM210 UsbManager manager test");
+		//theMessage.setText(theMessage.getText()+"\nSTARTEK FM210 UsbManager manager test");
 		// check for existing devices
 
 		//PendingIntent mPermissionIntent;
@@ -242,7 +242,7 @@ public class StartekFP300UNDK extends Activity {
         	vid=mdevice.getVendorId();
   
         	if(((pid==0x8360)&&(vid==0x0bca))||((pid==0x8160)&&(vid==0x0bca))){
-        		theMessage.setText("fm220 pid found");
+        		theMessage.setText(theMessage.getText()+"\nfm220 pid found");
         		d=mdevice;
         		
         		manager.requestPermission(d, mPermissionIntent);
@@ -267,13 +267,13 @@ public class StartekFP300UNDK extends Activity {
       					if(conn.getFileDescriptor() == -1)
       			        {
       						connectreader();
-      			        	theMessage.setText("try connect without file descripter"+ conn.getFileDescriptor());
+      			        	theMessage.setText(theMessage.getText()+"\ntry connect without file descripter"+ conn.getFileDescriptor());
       			        	connectrtn=FP_ConnectCaptureDriver(conn.getFileDescriptor());
       			             Log.d("FM220", "Fails to open DeviceConnection");
       			        }
       					 else
       					 {
-      						 theMessage.setText("try connect with file descripter"+ conn.getFileDescriptor());
+      						 theMessage.setText(theMessage.getText()+"\ntry connect with file descripter"+ conn.getFileDescriptor());
       						 connectrtn=FP_ConnectCaptureDriver(conn.getFileDescriptor());
       						  Log.d("FM220", "Opened DeviceConnection" + Integer.toString(conn.getFileDescriptor())); 
       					 }
@@ -355,7 +355,7 @@ public class StartekFP300UNDK extends Activity {
 						}
 					}.start(); 
 				}else{
-					theMessage.setText("FP_ConnectCaptureDriver() failed!!");
+					theMessage.setText(theMessage.getText()+"\nFP_ConnectCaptureDriver() failed!!");
     		    	theMessage.postInvalidate();
 				    FP_DisconnectCaptureDriver();
 					return;
@@ -394,7 +394,7 @@ public class StartekFP300UNDK extends Activity {
 							m_eventHandler.sendMessage(msg0);
 				            
 							for(int i=0;i<6;i++){
-				            	 //theMessage.setText("Times: "+i);
+				            	 //theMessage.setText(theMessage.getText()+"\nTimes: "+i);
 				            	 SystemClock.sleep(500);
 				            	 while((rtn=FP_Capture())!= 0){
 				            		 	Message msg1 = new Message();
@@ -407,10 +407,10 @@ public class StartekFP300UNDK extends Activity {
 					             rtn=FP_GetTemplate(minu_code1);
 				
 					             //if(rtn==0)
-					            	 //theMessage.setText("FP_GetTemplate() OK");
+					            	 //theMessage.setText(theMessage.getText()+"\nFP_GetTemplate() OK");
 
 					             rtn=FP_ISOminutiaEnroll(minu_code1, minu_code2);
-					             //theMessage.setText("enroll rtn="+rtn);
+					             //theMessage.setText(theMessage.getText()+"\nenroll rtn="+rtn);
 			        
 					             	while(true){
 					             		rtn2=FP_CheckBlank();
@@ -421,7 +421,7 @@ public class StartekFP300UNDK extends Activity {
 					             		
 										if(rtn2!=-1)
 					             			break;
-					             		//theMessage.setText("remove your finger!!!");
+					             		//theMessage.setText(theMessage.getText()+"\nremove your finger!!!");
 					             	}
 			                           
 					             	if(rtn==U_CLASS_A || rtn==U_CLASS_B){
@@ -447,7 +447,7 @@ public class StartekFP300UNDK extends Activity {
 						}
 					}.start(); 
 				}else{
-					theMessage.setText("FP_ConnectCaptureDriver() failed!!");
+					theMessage.setText(theMessage.getText()+"\nFP_ConnectCaptureDriver() failed!!");
 				    FP_DisconnectCaptureDriver();
 					return;
 				}
@@ -528,7 +528,7 @@ public class StartekFP300UNDK extends Activity {
 						}
 					}.start(); 
 				}else{
-					theMessage.setText("FP_ConnectCaptureDriver() failed!!");
+					theMessage.setText(theMessage.getText()+"\nFP_ConnectCaptureDriver() failed!!");
     		    	theMessage.postInvalidate();
 				    FP_DisconnectCaptureDriver();
 					return;
@@ -552,7 +552,7 @@ public class StartekFP300UNDK extends Activity {
 				
 				conn.close();
 				FP_DisconnectCaptureDriver();
-				theMessage.setText("FP_DisconnectCaptureDriver() Succeeded!!");
+				theMessage.setText(theMessage.getText()+"\nFP_DisconnectCaptureDriver() Succeeded!!");
 		    	theMessage.postInvalidate();
 		    	
 		    	
@@ -629,51 +629,51 @@ public class StartekFP300UNDK extends Activity {
     		    	buttonCapture.setEnabled(true);
     		    	buttonEnroll.setEnabled(true);
     		    	buttonVerify.setEnabled(true);
-    		    	theMessage.setText("Success.");
+    		    	theMessage.setText(theMessage.getText()+"\nSuccess.");
     		    	theMessage.postInvalidate();
     		    	break;
     		    case PublicData.TEXTVIEW_FAILURE:
-    		    	theMessage.setText("Failure.");
+    		    	theMessage.setText(theMessage.getText()+"\nFailure.");
     		    	theMessage.postInvalidate();
     		    	buttonEnroll.setEnabled(true);
     		    	break;
     		    case PublicData.TEXTVIEW_CAPTURE_PLEASE_PRESS:
-    		    	theMessage.setText("Capture: Press your finger");
+    		    	theMessage.setText(theMessage.getText()+"\nCapture: Press your finger");
     		    	theMessage.postInvalidate();
     		    	break;
     		    case PublicData.TEXTVIEW_ENROLL_PLEASE_PRESS:
-    		    	theMessage.setText("Enroll: Press your finger");
+    		    	theMessage.setText(theMessage.getText()+"\nEnroll: Press your finger");
     		    	theMessage.postInvalidate();
     		    	break;
     		    case PublicData.TEXTVIEW_VERIFY_PLEASE_PRESS:
-    		    	theMessage.setText("Verify: Press your finger");
+    		    	theMessage.setText(theMessage.getText()+"\nVerify: Press your finger");
     		    	theMessage.postInvalidate();
     		    	break;
     		    case PublicData.TEXTVIEW_SCORE:
     		    	if(Score()>500)
-    		    		theMessage.setText("Matching Success!! Score="+(int)Score());
+    		    		theMessage.setText(theMessage.getText()+"\nMatching Success!! Score="+(int)Score());
     		    	else
-    		    		theMessage.setText("Matching Fail!! Score="+(int)Score());
+    		    		theMessage.setText(theMessage.getText()+"\nMatching Fail!! Score="+(int)Score());
     		    	theMessage.postInvalidate();
     		    	break;
     		    case PublicData.TEXTVIEW_FILE_EXIST:	
-    		    	theMessage.setText("Verify: File exist");
+    		    	theMessage.setText(theMessage.getText()+"\nVerify: File exist");
     		    	theMessage.postInvalidate();
     		    	break;    
     		    case PublicData.TEXTVIEW_FILE_NOT_EXIST:	
-    		    	theMessage.setText("File not exist, please enroll first");
+    		    	theMessage.setText(theMessage.getText()+"\nFile not exist, please enroll first");
     		    	theMessage.postInvalidate();
     		    	buttonVerify.setEnabled(true);
     		    	break;    		    		    	
     		    case PublicData.TEXTVIEW_REMOVE_FINGER:
-    		    	theMessage.setText("Please remove your finger");
+    		    	theMessage.setText(theMessage.getText()+"\nPlease remove your finger");
     		    	theMessage.postInvalidate();
     		    	//new showPic().execute("/system/data/fp_image.bmp");
     		    	new showPic().execute("");
     		    	
     		    	break;
     		    case PublicData.TEXTVIEW_PRESS_AGAIN:
-    		    	theMessage.setText("Please press your finger again");
+    		    	theMessage.setText(theMessage.getText()+"\nPlease press your finger again");
     		    	theMessage.postInvalidate();
     		    	//new showPic().execute("/system/data/fp_image.bmp");
     		    	new showPic().execute("");
