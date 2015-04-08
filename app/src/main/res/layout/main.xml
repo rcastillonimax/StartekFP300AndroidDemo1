@@ -2,18 +2,19 @@
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget0"
     android:layout_width="wrap_content"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
     <TextView
         android:id="@+id/message"
-        android:layout_width="284dp"
+        android:layout_width="252dp"
         android:layout_height="275dp"
         android:layout_x="10dp"
         android:layout_y="3dp"
         android:text="TextView"
         android:textSize="15sp"
         android:autoText="false"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        >
 
     </TextView>
 
@@ -21,16 +22,16 @@
         android:id="@+id/test_image"
         android:layout_width="163dp"
         android:layout_height="200dp"
-        android:layout_x="467dp"
-        android:layout_y="79dp" >
+        android:layout_x="348dp"
+        android:layout_y="76dp" >
     </ImageView>
 
     <Button
         android:id="@+id/showB"
         android:layout_width="130dp"
         android:layout_height="36dp"
-        android:layout_x="320dp"
-        android:layout_y="9dp"
+        android:layout_x="204dp"
+        android:layout_y="7dp"
         android:text="Show" >
     </Button>
 
@@ -38,8 +39,8 @@
         android:id="@+id/discB"
         android:layout_width="70dp"
         android:layout_height="45dp"
-        android:layout_x="519dp"
-        android:layout_y="20dp"
+        android:layout_x="401dp"
+        android:layout_y="18dp"
         android:text="DisC" >
     </Button>
 
@@ -47,32 +48,32 @@
         android:id="@+id/enrollB"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:layout_x="303dp"
-        android:layout_y="186dp"
+        android:layout_x="184dp"
+        android:layout_y="184dp"
         android:text="Enroll" />
 
     <Button
         android:id="@+id/captureB"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:layout_x="303dp"
-        android:layout_y="131dp"
+        android:layout_x="184dp"
+        android:layout_y="129dp"
         android:text="Capture" />
 
     <Button
         android:id="@+id/verifyB"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:layout_x="303dp"
-        android:layout_y="241dp"
+        android:layout_x="184dp"
+        android:layout_y="238dp"
         android:text="Verify" />
 
     <Button
         android:id="@+id/connectB"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:layout_x="307dp"
-        android:layout_y="79dp"
+        android:layout_x="189dp"
+        android:layout_y="76dp"
         android:text="Connect" />
 
 </AbsoluteLayout>

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -254,7 +255,11 @@ public class StartekFP300UNDK extends Activity {
         		
         }         
         /////ori connect here
-        
+
+
+
+        //Scroll for textview
+        theMessage.setMovementMethod(new ScrollingMovementMethod());
       //Connect
       		buttonConnect.setOnClickListener(new Button.OnClickListener(){
       			@Override
@@ -633,7 +638,7 @@ public class StartekFP300UNDK extends Activity {
     		    	theMessage.postInvalidate();
     		    	break;
     		    case PublicData.TEXTVIEW_FAILURE:
-    		    	theMessage.setText(theMessage.getText()+"\nFailure.");
+    		    	theMessage.setText(theMessage.getText() + "\nFailure.");
     		    	theMessage.postInvalidate();
     		    	buttonEnroll.setEnabled(true);
     		    	break;
@@ -666,14 +671,14 @@ public class StartekFP300UNDK extends Activity {
     		    	buttonVerify.setEnabled(true);
     		    	break;    		    		    	
     		    case PublicData.TEXTVIEW_REMOVE_FINGER:
-    		    	theMessage.setText(theMessage.getText()+"\nPlease remove your finger");
+    		    	theMessage.setText(theMessage.getText() + "\nPlease remove your finger");
     		    	theMessage.postInvalidate();
     		    	//new showPic().execute("/system/data/fp_image.bmp");
     		    	new showPic().execute("");
     		    	
     		    	break;
     		    case PublicData.TEXTVIEW_PRESS_AGAIN:
-    		    	theMessage.setText(theMessage.getText()+"\nPlease press your finger again");
+    		    	theMessage.setText(theMessage.getText() + "\nPlease press your finger again");
     		    	theMessage.postInvalidate();
     		    	//new showPic().execute("/system/data/fp_image.bmp");
     		    	new showPic().execute("");
