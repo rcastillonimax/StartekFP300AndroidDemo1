@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <usb-device vendor-id="0bca" product-id="8360" />
+    <usb-device vendor-id="0bca" product-id="8160" />
+</resources><!-- From: file:/C:/Users/administrator/AndroidstudioProjects/StartekFP300AndroidDemo1/app/src/main/res/xml/device_filter.xml -->
