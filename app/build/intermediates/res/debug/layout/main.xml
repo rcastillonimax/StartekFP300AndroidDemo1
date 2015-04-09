@@ -6,10 +6,10 @@
 
     <TextView
         android:id="@+id/message"
-        android:layout_width="252dp"
-        android:layout_height="275dp"
-        android:layout_x="10dp"
-        android:layout_y="3dp"
+        android:layout_width="330dp"
+        android:layout_height="260dp"
+        android:layout_x="15dp"
+        android:layout_y="6dp"
         android:text="TextView"
         android:textSize="15sp"
         android:autoText="false"
@@ -22,58 +22,58 @@
         android:id="@+id/test_image"
         android:layout_width="163dp"
         android:layout_height="200dp"
-        android:layout_x="348dp"
-        android:layout_y="76dp" >
+        android:layout_x="356dp"
+        android:layout_y="72dp" >
     </ImageView>
 
     <Button
         android:id="@+id/showB"
-        android:layout_width="130dp"
-        android:layout_height="36dp"
-        android:layout_x="204dp"
-        android:layout_y="7dp"
-        android:text="Show" >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="282dp"
+        android:layout_y="205dp"
+        android:text="finish" >
     </Button>
 
     <Button
         android:id="@+id/discB"
-        android:layout_width="70dp"
-        android:layout_height="45dp"
-        android:layout_x="401dp"
-        android:layout_y="18dp"
-        android:text="DisC" >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="406dp"
+        android:layout_y="8dp"
+        android:text="Disconnect" >
     </Button>
 
     <Button
         android:id="@+id/enrollB"
-        android:layout_width="150dp"
-        android:layout_height="45dp"
-        android:layout_x="184dp"
-        android:layout_y="184dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="280dp"
+        android:layout_y="104dp"
         android:text="Enroll" />
 
     <Button
         android:id="@+id/captureB"
-        android:layout_width="150dp"
-        android:layout_height="45dp"
-        android:layout_x="184dp"
-        android:layout_y="129dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="271dp"
+        android:layout_y="56dp"
         android:text="Capture" />
 
     <Button
         android:id="@+id/verifyB"
-        android:layout_width="150dp"
-        android:layout_height="45dp"
-        android:layout_x="184dp"
-        android:layout_y="238dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="282dp"
+        android:layout_y="158dp"
         android:text="Verify" />
 
     <Button
         android:id="@+id/connectB"
-        android:layout_width="150dp"
-        android:layout_height="45dp"
-        android:layout_x="189dp"
-        android:layout_y="76dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="266dp"
+        android:layout_y="6dp"
         android:text="Connect" />
 
 </AbsoluteLayout><!-- From: file:/C:/Users/administrator/AndroidstudioProjects/StartekFP300AndroidDemo1/app/src/main/res/layout/main.xml -->
