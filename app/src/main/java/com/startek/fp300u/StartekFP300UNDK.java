@@ -314,8 +314,8 @@ public class StartekFP300UNDK extends Activity {
 						public void run(){
 							super.run();  		
 
-							FP_Capture();
-							FP_Capture();
+							//FP_Capture();
+							//FP_Capture();
 							Message msg0 = new Message();
 							msg0.what = PublicData.TEXTVIEW_CAPTURE_PLEASE_PRESS;
 							m_eventHandler.sendMessage(msg0);
@@ -632,16 +632,16 @@ public class StartekFP300UNDK extends Activity {
     	public void handleMessage(Message msg){
     		switch(msg.what){
     		    case PublicData.TEXTVIEW_SUCCESS:
-    		    	buttonCapture.setEnabled(true);
-    		    	buttonEnroll.setEnabled(true);
-    		    	buttonVerify.setEnabled(true);
+    		    	buttonCapture.setVisibility(View.VISIBLE);
+    		    	buttonEnroll.setVisibility(View.VISIBLE);
+    		    	buttonVerify.setVisibility(View.VISIBLE);
     		    	theMessage.setText(theMessage.getText()+"\nSuccess.");
     		    	theMessage.postInvalidate();
     		    	break;
     		    case PublicData.TEXTVIEW_FAILURE:
     		    	theMessage.setText(theMessage.getText() + "\nFailure.");
     		    	theMessage.postInvalidate();
-    		    	buttonEnroll.setEnabled(true);
+    		    	buttonEnroll.setVisibility(View.VISIBLE);
     		    	break;
     		    case PublicData.TEXTVIEW_CAPTURE_PLEASE_PRESS:
     		    	theMessage.setText(theMessage.getText()+"\nCapture: Press your finger");
@@ -669,7 +669,7 @@ public class StartekFP300UNDK extends Activity {
     		    case PublicData.TEXTVIEW_FILE_NOT_EXIST:	
     		    	theMessage.setText(theMessage.getText()+"\nFile not exist, please enroll first");
     		    	theMessage.postInvalidate();
-    		    	buttonVerify.setEnabled(true);
+    		    	buttonVerify.setVisibility(View.VISIBLE);
     		    	break;    		    		    	
     		    case PublicData.TEXTVIEW_REMOVE_FINGER:
     		    	theMessage.setText(theMessage.getText() + "\nPlease remove your finger");
@@ -687,9 +687,9 @@ public class StartekFP300UNDK extends Activity {
     		    case PublicData.SHOW_PIC:	
     		    	//new showPic().execute("/system/data/fp_image.bmp");
     		    	new showPic().execute("");
-    		    	buttonCapture.setEnabled(true);
-    		    	buttonEnroll.setEnabled(true);
-    		    	buttonVerify.setEnabled(true);
+    		    	buttonCapture.setVisibility(View.VISIBLE);
+    		    	buttonEnroll.setVisibility(View.VISIBLE);
+    		    	buttonVerify.setVisibility(View.VISIBLE);
     		    	break;
     		    	
     		}  
