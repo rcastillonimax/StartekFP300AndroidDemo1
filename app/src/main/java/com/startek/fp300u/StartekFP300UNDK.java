@@ -13,6 +13,7 @@ import android.os.SystemClock;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewDebug;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +26,23 @@ import android.util.Log;
 import android.app.PendingIntent;
 
 public class StartekFP300UNDK extends Activity {
-	
+
+
+    //Leemos libreria
+    static {
+        try {
+
+            System.loadLibrary("startekfp300u_jni");
+//            System.loadLibrary("startekfp300u"); si lee esta la app truena
+              Log.d("NIMAX","JNI libreria leida");
+        } catch (UnsatisfiedLinkError e) {
+            System.err.println("Native code library failed to load.\n" + e);
+            Log.d("NIMAX","JNI libreria NOOO leida");
+            System.exit(1);
+        }
+    }
+
+
 	final int    U_LEFT  =  -41;
 	final int    U_RIGHT =  -42;
 	final int    U_UP    =  -43;
@@ -70,7 +87,10 @@ public class StartekFP300UNDK extends Activity {
     private int connectrtn;
     private int rtn;
     private int rtn2;
-    private ImageView myImage; 
+    private ImageView myImage;
+
+    //variables Ray
+
     
     //byte[] bMapArray= new byte[1078+(256*324)];
     byte[] bMapArray= new byte[1078+(640*480)];
@@ -112,7 +132,7 @@ public class StartekFP300UNDK extends Activity {
     	                   }
     	                } 
     	                else {
-    	              //      Log.d(TAG, "permission denied for device " + device);
+    	                    Log.d(getString(R.string.app_name), "permission denied for device " + device);
     	                	theMessage.setText(theMessage.getText()+"\nfp300 found");
     	                }
     	            }
@@ -125,10 +145,9 @@ public class StartekFP300UNDK extends Activity {
 			// TODO Auto-generated method stub
 			
 			  usbIf = d.getInterface(0);
-			     Log.d("FP300","Interface:-"+ String.valueOf(usbIf.getEndpointCount()));
+            Log.d("FP300","connectreader ()");
+            Log.d("FP300","Interface:-"+ String.valueOf(usbIf.getEndpointCount()));
 			    Log.d("FP300" , "Interface Count: "+ Integer.toString(d.getInterfaceCount()));
-			    
-			    
 			    Log.d("USB", String.valueOf(usbIf.getEndpointCount()));
 			    
 			 //    final UsbEndpoint  usbEndpoint = usbInterface.getEndpoint(0);
@@ -144,11 +163,11 @@ public class StartekFP300UNDK extends Activity {
 				 epIN = usbIf.getEndpoint(1);
 				 ep2IN = usbIf.getEndpoint(2);
 				 
-			//	 theMessage.setText(theMessage.getText()+"\nep num "+ ep2IN.getEndpointNumber()+"packet size "+ ep2IN.getMaxPacketSize()+"dir "+ep2IN.getDirection());
-			//	 theMessage.setText(theMessage.getText()+"\nep num "+ epIN.getEndpointNumber()+"packet size "+ epIN.getMaxPacketSize()+"dir "+epIN.getDirection());
+				 theMessage.setText(theMessage.getText()+"\nep num "+ ep2IN.getEndpointNumber()+"packet size "+ ep2IN.getMaxPacketSize()+"dir "+ep2IN.getDirection());
+				 theMessage.setText(theMessage.getText()+"\nep num "+ epIN.getEndpointNumber()+"packet size "+ epIN.getMaxPacketSize()+"dir "+epIN.getDirection());
 				 theMessage.setText(theMessage.getText()+"\nep num "+ epOUT.getEndpointNumber()+"packet size "+ epOUT.getMaxPacketSize()+"dir "+epOUT.getDirection());
 			   
-			//	 theMessage.setText(theMessage.getText()+"\nmanager.hasPermission()");
+				 theMessage.setText(theMessage.getText()+"\nmanager.hasPermission()");
 			     if (!manager.hasPermission(d))
 			     {
 			    	 theMessage.setText(theMessage.getText()+"\nmanager.hasPermission() false");
@@ -173,11 +192,11 @@ public class StartekFP300UNDK extends Activity {
 				 
 				 if(conn.releaseInterface(usbIf))
 			        {
-			             Log.d("USB", "Released OK");
+			             Log.d("USB", "Released OK-autorizacion");
 			        }
 			        else
 			        {
-			            Log.d("USB", "Released fails");
+			            Log.d("USB", "Released fails-autorizacion");
 			        }
 
 
@@ -201,9 +220,9 @@ public class StartekFP300UNDK extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main); 
-       
-        
+        setContentView(R.layout.main);
+
+        Log.d(getString(R.string.app_name),"On Create Iniciamos SDK");
         InitialSDK();  
                        
         theMessage = (TextView)findViewById(R.id.message);      
@@ -234,23 +253,25 @@ public class StartekFP300UNDK extends Activity {
 		//theMessage.setText(theMessage.getText()+"\nSTARTEK FM210 UsbManager manager test");
 		// check for existing devices
 
-		//PendingIntent mPermissionIntent;
+		//PendingIntent mPermissionIntent; identifica todos los dispositivos
         for ( UsbDevice mdevice :  manager.getDeviceList().values()) {
 
         	int pid,vid;
         	
         	pid=mdevice.getProductId();
         	vid=mdevice.getVendorId();
-  
+            Log.d(getString(R.string.app_name),"pid: "+pid+" vid :"+vid);
+  //tomamos nuestro dispositivo
         	if(((pid==0x8360)&&(vid==0x0bca))||((pid==0x8160)&&(vid==0x0bca))){
-        		theMessage.setText(theMessage.getText()+"\nfm220 pid found");
+                Log.d(getString(R.string.app_name),"Lector encontrado ");
+                theMessage.setText(theMessage.getText()+"\nfm220 pid found");
         		d=mdevice;
-        		
+   //enviamos permisos
         		manager.requestPermission(d, mPermissionIntent);
-        		
-        		
+
+
         		break;
-        		
+
         	}
         		
         }         
@@ -261,6 +282,8 @@ public class StartekFP300UNDK extends Activity {
         //Ray-Scroll for textview
         theMessage.setMovementMethod(new ScrollingMovementMethod());
 
+       //INICIAMOS Listeners
+
       //Connect
       		buttonConnect.setOnClickListener(new Button.OnClickListener(){
       			@Override
@@ -269,7 +292,7 @@ public class StartekFP300UNDK extends Activity {
       				
       			    //Log.v("Fm210", "Marcus: Click");
       				try{
-      		
+      		//-1 si no se establecio la conexion,
       					if(conn.getFileDescriptor() == -1)
       			        {
       						connectreader();
@@ -277,9 +300,9 @@ public class StartekFP300UNDK extends Activity {
       			        	connectrtn=FP_ConnectCaptureDriver(conn.getFileDescriptor());
       			             Log.d("FM220", "Fails to open DeviceConnection");
       			        }
-      					 else
+      					 else//conexion sucess
       					 {
-      						 theMessage.setText(theMessage.getText()+"\ntry connect with file descripter"+ conn.getFileDescriptor());
+      						 theMessage.setText(theMessage.getText()+"\nconnected with file descripter"+ conn.getFileDescriptor());
       						 connectrtn=FP_ConnectCaptureDriver(conn.getFileDescriptor());
       						  Log.d("FM220", "Opened DeviceConnection" + Integer.toString(conn.getFileDescriptor())); 
       					 }
@@ -289,8 +312,8 @@ public class StartekFP300UNDK extends Activity {
       			catch(Exception e){
       				e.printStackTrace();	
       			}
-      			
-      											
+                    Log.d(getString(R.string.app_name),"Es 0?? Connectrtn: "+connectrtn);
+//En el manual dice que si indica 0 es por que FP_connectCaptureDriver no pudo conectarse, pero puede ser que sea alrevez
       			}
       		});
         
@@ -302,14 +325,17 @@ public class StartekFP300UNDK extends Activity {
 				
 			    //Log.v("Fm210", "Marcus: Click");
 				try{
-				//si el valor es -1 la conexion no se establecion
-				if(connectrtn!=-1){
+				//si el valor es == 0 la conexion no se establecio FP_connecteCaptureDriver, no como el manual dice
+                 Log.d(getString(R.string.app_name),"connectrtn: "+connectrtn);
+				if(connectrtn!=0){//cuando se realiza conexion da -2 y si falla 0
 					m_eventHandler = new EventHandler(Looper.getMainLooper());
 //					CaptureThread m_captureThread = new CaptureThread(m_eventHandler);
 //					Thread m_capture = new Thread(m_captureThread);
 //					m_capture.start();
-					buttonCapture.setVisibility(View.INVISIBLE);
-					
+                    Log.d(getString(R.string.app_name),"Connect invisible");
+                    buttonCapture.setVisibility(View.INVISIBLE);
+
+                    Log.d(getString(R.string.app_name),"Connect Thread");
 					new Thread(){
 						public void run(){
 							super.run();  		
@@ -322,16 +348,17 @@ public class StartekFP300UNDK extends Activity {
 								
 							counter++;
 							if((counter%15)==0){
-								Log.v("Fm210", "Start GC");
+								Log.v("Fm210", "Start GC Gabage Collector");
 								System.gc();
 							}
 							
 							
 							Log.v("Fm210", "Marcus: run");
-							//InitialSDK();
+							//InitialSDK();//PODEMOS IMPLEMENTAR EL DIAGNOSTICO DEL LECTOR
 							//Log.v("Fm210", "Marcus: InitialSDK() OK");
 							//PublicData.captureDone=false;
-							while((rtn=FP_Capture())!=0){
+                            while((rtn=FP_Capture())!=0){//Huella Ok !=0 originalmente
+                                Log.d(getString(R.string.app_name),"rtn: "+rtn);
 								Message msg2 = new Message();
 								msg2.what = PublicData.SHOW_PIC; 
 								m_eventHandler.sendMessage(msg2);
@@ -381,75 +408,89 @@ public class StartekFP300UNDK extends Activity {
 			@Override
 			public void onClick(View v){				
 		//		led_off();
-		
+                Log.d(getString(R.string.app_name),"Connect invisible");
+                Log.d(getString(R.string.app_name),"Connectrtn: "+connectrtn);
 				
-				
-				if(connectrtn==0){
+
+				if(connectrtn!=-1){
 					buttonEnroll.setVisibility(View.INVISIBLE);
+                    Log.d(getString(R.string.app_name),"Enroll invisible");
 					m_eventHandler = new EventHandler(Looper.getMainLooper());
-					
+                    Log.d(getString(R.string.app_name),"Hilo");
 					//let thread do main job
 					new Thread(){
 						public void run(){
 							super.run();  		
-														
-						    FP_CreateEnrollHandle();
 
-						    Message msg0 = new Message();
-							msg0.what = PublicData.TEXTVIEW_ENROLL_PLEASE_PRESS;
-							m_eventHandler.sendMessage(msg0);
-				            
-							for(int i=0;i<6;i++){
-				            	 //theMessage.setText(theMessage.getText()+"\nTimes: "+i);
-				            	 SystemClock.sleep(500);
-				            	 while((rtn=FP_Capture())!= 0){
-				            		 	Message msg1 = new Message();
-										msg1.what = PublicData.TEXTVIEW_PRESS_AGAIN;
-										m_eventHandler.sendMessage(msg1);
-										Message msg2 = new Message();
-										msg2.what = PublicData.SHOW_PIC; 
-										m_eventHandler.sendMessage(msg2);
-				            	 }
-					             rtn=FP_GetTemplate(minu_code1);
-				
-					             //if(rtn==0)
-					            	 //theMessage.setText(theMessage.getText()+"\nFP_GetTemplate() OK");
+                            //verificamos respuesta del Handle, siempre es uno??
+                            int response=FP_CreateEnrollHandle();
+                            Log.d(getString(R.string.app_name),"Create ENrollHandle response: "+response);
+ //                           theMessage.setText(theMessage.getText()+"\n Enroll: "+response);
 
-					             rtn=FP_ISOminutiaEnroll(minu_code1, minu_code2);
-					             //theMessage.setText(theMessage.getText()+"\nenroll rtn="+rtn);
-			        
-					             	while(true){
-					             		rtn2=FP_CheckBlank();
-										
-					             		Message msg2 = new Message();
-					             		msg2.what = PublicData.TEXTVIEW_REMOVE_FINGER;
-										m_eventHandler.sendMessage(msg2);
-					             		
-										if(rtn2!=-1)
-					             			break;
-					             		//theMessage.setText(theMessage.getText()+"\nremove your finger!!!");
-					             	}
-			                           
-					             	if(rtn==U_CLASS_A || rtn==U_CLASS_B){
-					             		//FP_SaveISOminutia(minu_code2, "/system/data/fpcode.dat");
-					             		//FP_SaveISOminutia(minu_code2, "/data/data/com.startek.fm210/fpcode.dat");
-					             		FP_SaveISOminutia(minu_code2, Context.getFilesDir().getPath()+"/fpcode.dat");
-					             		
-					             		SystemClock.sleep(1000);
-					             		Message msg3 = new Message();
-					             		msg3.what = PublicData.TEXTVIEW_SUCCESS;
-										m_eventHandler.sendMessage(msg3);		
-										
-					             		break;
-					             	}else if(i==5){
-					             		Message msg4 = new Message();
-					             		msg4.what = PublicData.TEXTVIEW_FAILURE;
-										m_eventHandler.sendMessage(msg4);
-					             	}
-					             	//showPic();
-				            }
+                            Message msg0 = new Message();
+                            msg0.what = PublicData.TEXTVIEW_ENROLL_PLEASE_PRESS;
+                            m_eventHandler.sendMessage(msg0);
 
-				            FP_DestroyEnrollHandle();		
+                            for(int i=0;i<6;i++){
+                                //theMessage.setText(theMessage.getText()+"\nTimes: "+i);
+                                Log.d(getString(R.string.app_name),"for i: "+i);
+                                while((rtn=FP_Capture())!= -1){
+                                    Log.d(getString(R.string.app_name),"rtn: "+ rtn);
+                                    Log.d(getString(R.string.app_name),"For, pausa de 500ms");
+                                    SystemClock.sleep(5000);
+                                    Log.d(getString(R.string.app_name),"For, acaba pause i: "+i);
+
+
+                                    Message msg1 = new Message();
+                                    msg1.what = PublicData.TEXTVIEW_PRESS_AGAIN;
+                                    m_eventHandler.sendMessage(msg1);
+                                    Message msg2 = new Message();
+                                    msg2.what = PublicData.SHOW_PIC;
+                                    m_eventHandler.sendMessage(msg2);
+                                }
+
+
+                                rtn=FP_GetTemplate(minu_code1);
+
+                                //if(rtn==0)
+                                //theMessage.setText(theMessage.getText()+"\nFP_GetTemplate() OK");
+
+                                rtn=FP_ISOminutiaEnroll(minu_code1, minu_code2);
+                                //theMessage.setText(theMessage.getText()+"\nenroll rtn="+rtn);
+
+                                while(true){
+                                    rtn2=FP_CheckBlank();
+
+                                    Message msg2 = new Message();
+                                    msg2.what = PublicData.TEXTVIEW_REMOVE_FINGER;
+                                    m_eventHandler.sendMessage(msg2);
+
+                                    if(rtn2!=-1)
+                                        break;
+                                    //theMessage.setText(theMessage.getText()+"\nremove your finger!!!");
+                                }
+
+                                if(rtn==U_CLASS_A || rtn==U_CLASS_B){
+                                    //FP_SaveISOminutia(minu_code2, "/system/data/fpcode.dat");
+                                    //FP_SaveISOminutia(minu_code2, "/data/data/com.startek.fm210/fpcode.dat");
+                                    FP_SaveISOminutia(minu_code2, Context.getFilesDir().getPath()+"/fpcode.dat");
+
+                                    SystemClock.sleep(1000);
+                                    Message msg3 = new Message();
+                                    msg3.what = PublicData.TEXTVIEW_SUCCESS;
+                                    m_eventHandler.sendMessage(msg3);
+
+                                    break;
+                                }else if(i==5){
+                                    Message msg4 = new Message();
+                                    msg4.what = PublicData.TEXTVIEW_FAILURE;
+                                    m_eventHandler.sendMessage(msg4);
+                                }
+                                //showPic();
+                            }
+
+                            FP_DestroyEnrollHandle();
+
 						}
 					}.start(); 
 				}else{
@@ -549,7 +590,9 @@ public class StartekFP300UNDK extends Activity {
 
 		buttonShow.setOnClickListener(new Button.OnClickListener(){
 			@Override
-			public void onClick(View v){}
+			public void onClick(View v){
+                finish();
+            }
 		});		
 		
 		buttonDisC.setOnClickListener(new Button.OnClickListener(){
@@ -567,9 +610,7 @@ public class StartekFP300UNDK extends Activity {
 		
 	}
 	
-    static {
-    	System.loadLibrary("startekfp300u_jni");
-    }
+
     
     private native void InitialSDK();
     private native int FP_ConnectCaptureDriver(int number);
@@ -589,8 +630,8 @@ public class StartekFP300UNDK extends Activity {
     
     class showPic extends AsyncTask<String, Void, String>{
  //       private ImageView image;
-        private Bitmap bMap=null;	
-    	
+        private Bitmap bMap=null;
+
         @Override
 		protected String doInBackground(String... path) {        	
         	tryGetStream();
@@ -609,7 +650,7 @@ public class StartekFP300UNDK extends Activity {
 			// TODO Auto-generated method stub
 			super.onProgressUpdate(values);
 			myImage.postInvalidate(); 
-			//Log.v("Fm210", "Marcus: onProgressUpdate");
+			Log.v("Fm210", "Marcus: onProgressUpdate");
 		}
 
 		private void tryGetStream(){
