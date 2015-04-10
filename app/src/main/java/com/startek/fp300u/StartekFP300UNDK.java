@@ -85,7 +85,7 @@ public class StartekFP300UNDK extends Activity {
     private Button buttonShow;
     private Button buttonDisC;
     private int connectrtn;
-    private int rtn;
+    private String rtn;
     private int rtn2;
     private ImageView myImage;
 
@@ -338,9 +338,9 @@ public class StartekFP300UNDK extends Activity {
                     Log.d(getString(R.string.app_name),"Connect Thread");
 					new Thread(){
 						public void run(){
-							super.run();  		
+							super.run();
 
-							//FP_Capture();
+                            Log.d(getString(R.string.app_name),"FPCapture(): "+FP_Capture());
 							//FP_Capture();
 							Message msg0 = new Message();
 							msg0.what = PublicData.TEXTVIEW_CAPTURE_PLEASE_PRESS;
@@ -357,7 +357,7 @@ public class StartekFP300UNDK extends Activity {
 							//InitialSDK();//PODEMOS IMPLEMENTAR EL DIAGNOSTICO DEL LECTOR
 							//Log.v("Fm210", "Marcus: InitialSDK() OK");
 							//PublicData.captureDone=false;
-                            while((rtn=FP_Capture())!=0){//Huella Ok !=0 originalmente
+                            while(!(rtn = FP_Capture()).equals("OK")){//Huella Ok !=0 originalmente
                                 Log.d(getString(R.string.app_name),"rtn: "+rtn);
 								Message msg2 = new Message();
 								msg2.what = PublicData.SHOW_PIC; 
@@ -403,7 +403,7 @@ public class StartekFP300UNDK extends Activity {
 			}
 		});
 	
-		//Enroll
+/*		//Enroll
 		buttonEnroll.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View v){				
@@ -434,7 +434,8 @@ public class StartekFP300UNDK extends Activity {
                             for(int i=0;i<6;i++){
                                 //theMessage.setText(theMessage.getText()+"\nTimes: "+i);
                                 Log.d(getString(R.string.app_name),"for i: "+i);
-                                while((rtn=FP_Capture())!= -1){
+                                //while((rtn=FP_Capture())!= -1){
+                                while(!(rtn = FP_Capture()).equals("OK")){//Huella Ok !=0 originalmente
                                     Log.d(getString(R.string.app_name),"rtn: "+ rtn);
                                     Log.d(getString(R.string.app_name),"For, pausa de 500ms");
                                     SystemClock.sleep(5000);
@@ -586,7 +587,7 @@ public class StartekFP300UNDK extends Activity {
 			}
 											
 			}
-		});
+		});*/
 
 		buttonShow.setOnClickListener(new Button.OnClickListener(){
 			@Override
@@ -615,11 +616,11 @@ public class StartekFP300UNDK extends Activity {
     private native void InitialSDK();
     private native int FP_ConnectCaptureDriver(int number);
     private native void FP_DisconnectCaptureDriver();
-    private native int FP_Capture();
+    private native String FP_Capture();
     private native int FP_CheckBlank();
     private native void FP_SaveImageBMP(String filepath);
     private native int FP_CreateEnrollHandle();
-    private native int FP_GetTemplate(byte[] m1);
+    private native String FP_GetTemplate(byte[] m1);
     private native int FP_ISOminutiaEnroll(byte[] m1, byte[] m2);
     private native void FP_SaveISOminutia(byte[] m2, String filepath);
     private native void FP_DestroyEnrollHandle();
