@@ -212,7 +212,7 @@ public class StartekFP300UNDK extends Activity {
 			 //     byte [] buf= new byte [48];
 			 //     eeprom_read(0,48,buf);
 			      theMessage.setText(theMessage.getText()+"\nfm220 fileDesc" + conn.getFileDescriptor());
-	
+                  Log.d(getString(R.string.app_name), "Exit connectreader");
 
 			      
     	}
@@ -327,39 +327,43 @@ public class StartekFP300UNDK extends Activity {
 			    //Log.v("Fm210", "Marcus: Click");
 				try{
 				//si el valor es == 0 la conexion no se establecio FP_connecteCaptureDriver, no como el manual dice
-                 Log.d(getString(R.string.app_name),"connectrtn: "+connectrtn);
+                 Log.d(getString(R.string.app_name),"Capture connectrtn: "+connectrtn);
 				if(connectrtn!=0){//cuando se realiza conexion da -2 y si falla 0
 					m_eventHandler = new EventHandler(Looper.getMainLooper());
 //					CaptureThread m_captureThread = new CaptureThread(m_eventHandler);
 //					Thread m_capture = new Thread(m_captureThread);
 //					m_capture.start();
-                    Log.d(getString(R.string.app_name),"Connect invisible");
+                    Log.d(getString(R.string.app_name),"Capture invisible");
                     buttonCapture.setVisibility(View.INVISIBLE);
 
-                    Log.d(getString(R.string.app_name),"Connect Thread");
+                    Log.d(getString(R.string.app_name),"Capture Thread");
 					new Thread(){
 						public void run(){
 							super.run();
 
-                            Log.d(getString(R.string.app_name),"FPCapture(): "+FP_Capture());
+                            Log.d(getString(R.string.app_name),"Capture FPCapture(): "+FP_Capture());
 							//FP_Capture();
+                            Log.d(getString(R.string.app_name),"Capture FPCapture(): "+FP_Capture());
 							Message msg0 = new Message();
 							msg0.what = PublicData.TEXTVIEW_CAPTURE_PLEASE_PRESS;
 							m_eventHandler.sendMessage(msg0);
 								
 							counter++;
 							if((counter%15)==0){
-								Log.v("Fm210", "Start GC Gabage Collector");
+								Log.v("Fm210", "Start GC Garbage Collector");
 								System.gc();
 							}
 							
 							
-							Log.v("Fm210", "Marcus: run");
+							Log.v("Fm210", "Marcus: WHILE");
 							//InitialSDK();//PODEMOS IMPLEMENTAR EL DIAGNOSTICO DEL LECTOR
 							//Log.v("Fm210", "Marcus: InitialSDK() OK");
 							//PublicData.captureDone=false;
                             while((rtn = FP_Capture()) != 0){//Huella Ok !=0 originalmente
                                 Log.d(getString(R.string.app_name),"while rtn: "+rtn);
+                                Log.d(getString(R.string.app_name),"while, pausa de 500ms");
+                                SystemClock.sleep(5000);
+                                Log.d(getString(R.string.app_name),"while, acaba pause");
 								Message msg2 = new Message();
 								msg2.what = PublicData.SHOW_PIC; 
 								m_eventHandler.sendMessage(msg2);
@@ -375,7 +379,7 @@ public class StartekFP300UNDK extends Activity {
 							Message msg1 = new Message();
 							msg1.what = PublicData.TEXTVIEW_SUCCESS;
 							m_eventHandler.sendMessage(msg1);
-							//Log.v("Fm210", "Marcus: FP_SaveImageBMP OK");
+							Log.v("Fm210", "Marcus: FP_SaveImageBMP OK");
 //							try{
 //							//Thread.sleep(100);							
 //							}
@@ -383,7 +387,7 @@ public class StartekFP300UNDK extends Activity {
 							
 							Message msg2 = new Message();
 							//msg2 = new Message();
-							msg2.what = PublicData.SHOW_PIC; 
+							msg2.what = PublicData.SHOW_PIC; Log.d(getString(R.string.app_name),"MEnsaje 2");
 							m_eventHandler.sendMessage(msg2);
 							
 						}
@@ -436,7 +440,7 @@ public class StartekFP300UNDK extends Activity {
                                 //theMessage.setText(theMessage.getText()+"\nTimes: "+i);
                                 Log.d(getString(R.string.app_name),"for i: "+i);
                                 while((rtn=FP_Capture())!= 0){//Huella Ok !=0 originalmente
-                                    Log.d(getString(R.string.app_name),"rtn: "+ rtn);
+                                    Log.d(getString(R.string.app_name),"while rtn: "+ rtn);
                                     Log.d(getString(R.string.app_name),"For, pausa de 500ms");
                                     SystemClock.sleep(5000);
                                     Log.d(getString(R.string.app_name),"For, acaba pause i: "+i);
@@ -640,10 +644,10 @@ public class StartekFP300UNDK extends Activity {
 		}
 		
 	    protected void onPostExecute(String a) {
-	    	myImage.setImageBitmap(bMap);	    	
+            publishProgress();Log.d(getString(R.string.app_name),"onpostExecute bmap: "+bMap);
+	    	myImage.setImageBitmap(bMap);
 	    	bMap = null;
 	    	System.gc();
-	    	publishProgress();
 	    }
 	    
 	    @Override
@@ -657,11 +661,13 @@ public class StartekFP300UNDK extends Activity {
 		private void tryGetStream(){
 	         try {
 	             //buf = FP_GetImageBuffer);
-	             FP_GetImageBuffer(bMapArray); 
-	             	             		    	
+	             FP_GetImageBuffer(bMapArray);
+                 Log.d(getString(R.string.app_name),"trygetstream, getimage bufer: ");
 	             bMap = BitmapFactory.decodeByteArray(bMapArray, 0, bMapArray.length);
 	    	
-	         }catch (Exception e) {}
+	         }catch (Exception e) {
+                 Log.d(getString(R.string.app_name),"Error trygetstream: "+e.getMessage());
+             }
 	    }
 	    	    
     }
@@ -677,7 +683,7 @@ public class StartekFP300UNDK extends Activity {
     		    	buttonCapture.setVisibility(View.VISIBLE);
     		    	buttonEnroll.setVisibility(View.VISIBLE);
     		    	buttonVerify.setVisibility(View.VISIBLE);
-    		    	theMessage.setText(theMessage.getText()+"\nSuccess.");
+    		    	theMessage.setText(theMessage.getText()+"\nbotones Visibles\n Success.");
     		    	theMessage.postInvalidate();
     		    	break;
     		    case PublicData.TEXTVIEW_FAILURE:

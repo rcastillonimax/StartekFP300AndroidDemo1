@@ -14,7 +14,7 @@
         android:textSize="15sp"
         android:autoText="false"
         android:scrollbars="vertical"
-        >
+        android:padding="2sp">
 
     </TextView>
 

@@ -31,35 +31,39 @@ uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:8:5
 	android:name
 		ADDED from AndroidManifest.xml:8:22
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:9:5
+	android:name
+		ADDED from AndroidManifest.xml:9:22
 application
-ADDED from AndroidManifest.xml:10:5
+ADDED from AndroidManifest.xml:11:5
 	android:label
-		ADDED from AndroidManifest.xml:12:9
+		ADDED from AndroidManifest.xml:13:9
 	android:icon
-		ADDED from AndroidManifest.xml:11:9
+		ADDED from AndroidManifest.xml:12:9
 activity#com.startek.fp300u.StartekFP300UNDK
-ADDED from AndroidManifest.xml:13:9
+ADDED from AndroidManifest.xml:14:9
 	android:label
-		ADDED from AndroidManifest.xml:14:13
-	android:name
 		ADDED from AndroidManifest.xml:15:13
-intent-filter#android.hardware.usb.action.USB_DEVICE_ATTACHED+android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:16:13
-action#android.hardware.usb.action.USB_DEVICE_ATTACHED
-ADDED from AndroidManifest.xml:17:17
 	android:name
-		ADDED from AndroidManifest.xml:17:25
-action#android.intent.action.MAIN
+		ADDED from AndroidManifest.xml:16:13
+intent-filter#android.hardware.usb.action.USB_DEVICE_ATTACHED+android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:17:13
+action#android.hardware.usb.action.USB_DEVICE_ATTACHED
 ADDED from AndroidManifest.xml:18:17
 	android:name
 		ADDED from AndroidManifest.xml:18:25
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:19:17
+	android:name
+		ADDED from AndroidManifest.xml:19:25
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:20:17
+ADDED from AndroidManifest.xml:21:17
 	android:name
-		ADDED from AndroidManifest.xml:20:27
+		ADDED from AndroidManifest.xml:21:27
 meta-data#android.hardware.usb.action.USB_DEVICE_ATTACHED
-ADDED from AndroidManifest.xml:22:13
+ADDED from AndroidManifest.xml:23:13
 	android:resource
-		ADDED from AndroidManifest.xml:23:17
+		ADDED from AndroidManifest.xml:24:17
 	android:name
-		ADDED from AndroidManifest.xml:22:24
+		ADDED from AndroidManifest.xml:23:24
